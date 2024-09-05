@@ -47,6 +47,7 @@
   .valueInput_date {
     width: 200px;
     padding-left: 20px;
+    background: #e3e3e3;
   }
 }
 
@@ -59,6 +60,7 @@
   .valueInput_shift {
     width: 50px;
     padding-left: 5px;
+    background: #e3e3e3;
   }
 }
 .master {
@@ -70,6 +72,7 @@
   .valueInput_master {
     width: 200px;
     padding-left: 5px;
+    background: #e3e3e3;
   }
 }
 .rptkm {
@@ -81,11 +84,18 @@
   .valueInput_rptkm {
     width: 200px;
     padding-left: 5px;
+    background: #e3e3e3;
   }
 }
 
 .personnel {
   grid-area: e;
+  background-color: white;
+  .valueInput_personnel {
+    width: 200px;
+    padding-left: 5px;
+    background-color: white;
+  }
 }
 
 .people {
