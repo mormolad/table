@@ -15,50 +15,73 @@
 }
 
 .title {
-  width: 100px;
-
-  height: 40px;
+  width: min-content;
+  height: 28px;
   margin: auto 0;
-}
-
-.value {
-  margin: auto 0;
-  padding-left: 20px;
-  padding-right: 20px;
-  color: black;
-  font-size: 20px;
-  font-weight: 500;
-  line-height: 40px;
-  border: none;
-}
-.value_gray {
-  background: #e3e3e3;
 }
 
 .item {
   width: 100%;
   height: 100%;
-  display: flex;
   font-size: 20px;
   font-weight: 500;
   line-height: 28px;
   background: white;
+  display: flex;
+  align-items: center;
 }
-.item_grey {
+.valueInput {
+  margin: auto 0;
+  color: black;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 28px;
+  border: none;
   background: #e3e3e3;
 }
 
 .date {
   grid-area: a;
+  background: #e3e3e3;
+
+  .valueInput_date {
+    width: 200px;
+    padding-left: 20px;
+  }
 }
+
 .shift {
   grid-area: b;
+  background: #e3e3e3;
+  .title {
+    padding-left: 20px;
+  }
+  .valueInput_shift {
+    width: 50px;
+    padding-left: 5px;
+  }
 }
 .master {
   grid-area: c;
+  background: #e3e3e3;
+  .title {
+    padding-left: 20px;
+  }
+  .valueInput_master {
+    width: 200px;
+    padding-left: 5px;
+  }
 }
 .rptkm {
   grid-area: d;
+  background: #e3e3e3;
+  .title {
+    padding-left: 20px;
+  }
+  .valueInput_rptkm {
+    width: 200px;
+    padding-left: 5px;
+  }
 }
 
 .personnel {
