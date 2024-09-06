@@ -21,7 +21,8 @@ export default function Import({
   const [value, setValue] = useState<string | number>(beginValue);
   const [dirty, setDirty] = useState<boolean>(false);
   const [error, setError] = useState<string>('Поле не может быть пустым');
-  const [, setSecondsRemaining] = useState<number>(10);
+  const [secondsRemaining, setSecondsRemaining] = useState<number>(10);
+
   const [initialValue, setInitialValue] = useState<string | number>(beginValue); // Сохраняем начальное значение
   const timerRef = useRef<NodeJS.Timeout | null>(null); // Для отслеживания таймера
   const progressRef = useRef<NodeJS.Timeout | null>(null); // Для отслеживания интервала прогресса
@@ -82,7 +83,7 @@ export default function Import({
         if (prevSeconds <= 1) {
           clearInterval(progressRef.current!);
           progressRef.current = null;
-          console.log(`Данные отправлены: ${id}, значение: ${valueSend}`);
+          console.log(`Данные отправлены. Id:${id}, значение: ${valueSend}`);
           setInitialValue(valueSend);
           dispatch(setIsProgress(false));
           return 0;
@@ -93,6 +94,8 @@ export default function Import({
       dispatch(setProgress(loadСounter));
     }, 1000); // Обновляем прогресс каждую секунду
   };
+
+  useEffect(() => {}, []);
 
   // Очищаем таймеры при размонтировании компонента
   useEffect(() => {
