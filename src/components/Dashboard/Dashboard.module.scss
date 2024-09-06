@@ -9,6 +9,7 @@
   gap: 1px;
 
   grid-template-areas: 'a b c c c c d' 'e f f f f g g' 'h i i j k g g ' 'h l m m m g g';
+  font-family: sans-serif;
   color: black;
   background-color: rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(0, 0, 0, 0.2);
@@ -46,7 +47,7 @@
 
   .valueInput_date {
     width: 200px;
-    padding-left: 20px;
+    padding-left: 31px;
     background: #e3e3e3;
   }
 }
@@ -55,7 +56,7 @@
   grid-area: b;
   background: #e3e3e3;
   .title {
-    padding-left: 20px;
+    padding-left: 31px;
   }
   .valueInput_shift {
     width: 50px;
@@ -67,23 +68,21 @@
   grid-area: c;
   background: #e3e3e3;
   .title {
-    padding-left: 20px;
+    padding-left: 31px;
   }
   .valueInput_master {
     width: 200px;
-    padding-left: 5px;
+    padding-left: 10px;
     background: #e3e3e3;
   }
 }
 .rptkm {
   grid-area: d;
   background: #e3e3e3;
-  .title {
-    padding-left: 20px;
-  }
+
   .valueInput_rptkm {
     width: 200px;
-    padding-left: 5px;
+    padding-left: 31px;
     background: #e3e3e3;
   }
 }
@@ -93,35 +92,69 @@
   background-color: white;
   .valueInput_personnel {
     width: 200px;
-    padding-left: 5px;
-    background-color: white;
+    padding-left: 31px;
   }
 }
 
 .people {
   grid-area: f;
+  justify-content: center;
+  .valueInput_people {
+    width: 80px;
+    padding-left: 5px;
+  }
 }
 .comment {
   grid-area: g;
+  .valueInput_comment {
+    font-family: sans-serif;
+    width: 300px;
+    height: 250px;
+    padding-left: 31px;
+    resize: none;
+  }
 }
 .ktp {
   grid-area: h;
+  .valueInput_ktp {
+    width: 200px;
+    padding-left: 31px;
+  }
 }
 .work {
   grid-area: i;
+  .valueInput_work {
+    width: 200px;
+    padding-left: 31px;
+  }
 }
 .workingUnits {
   grid-area: j;
   padding-left: 0;
-  text-align: center;
+  justify-content: center;
+  .valueInput_workingUnits {
+    width: 40px;
+  }
 }
 .spi {
   grid-area: k;
+  .valueInput_spi {
+    padding-left: 31px;
+    width: 150px;
+  }
 }
 .percent {
   grid-area: l;
+  .valueInput_percent {
+    padding-left: 31px;
+    width: 50px;
+  }
 }
 .works {
   grid-area: m;
-  color: red;
+  .valueInput_works {
+    padding-left: 31px;
+    width: 500px;
+    color: red;
+  }
 }

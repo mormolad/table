@@ -82,7 +82,13 @@ export default function Dashboard() {
         <p className={style.title}>человек</p>
       </div>
       <div className={`${style.item} ${style.comment}`}>
-        <textarea className={style.value} value={comment}></textarea>
+        <Input
+          beginValue={comment}
+          DATA_REGEXP={ANY_REGEXP}
+          additionalClass={style.valueInput_comment}
+          id="7"
+          textArea={true}
+        />
       </div>
       <div className={`${style.item} ${style.ktp}`}>
         <Input
@@ -92,7 +98,6 @@ export default function Dashboard() {
           id="8"
         />
       </div>
-
       <div className={`${style.item} ${style.work}`}>
         <Input
           beginValue={work}

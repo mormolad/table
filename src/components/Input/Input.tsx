@@ -7,6 +7,7 @@ interface ImportProps {
   DATA_REGEXP: RegExp;
   additionalClass: string;
   id: string; // Для идентификации ячейки
+  textArea?: true;
 }
 
 export default function Import({
@@ -14,6 +15,7 @@ export default function Import({
   DATA_REGEXP,
   additionalClass,
   id,
+  textArea,
 }: ImportProps) {
   const dispatch = useDispatch();
   const [value, setValue] = useState<string | number>(beginValue);
@@ -23,7 +25,9 @@ export default function Import({
   const [initialValue, setInitialValue] = useState<string | number>(beginValue); // Сохраняем начальное значение
   const timerRef = useRef<NodeJS.Timeout | null>(null); // Для отслеживания таймера
   const progressRef = useRef<NodeJS.Timeout | null>(null); // Для отслеживания интервала прогресса
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const newValue = e.target.value;
     clearProgressAndTimer();
     dispatch(setIsProgress(false));
@@ -99,11 +103,19 @@ export default function Import({
 
   return (
     <div className={style.containerInput}>
-      <input
-        className={`${style.valueInput} ${additionalClass}`}
-        value={value}
-        onChange={handleChange}
-      />
+      {!textArea ? (
+        <input
+          className={`${style.valueInput} ${additionalClass}`}
+          value={value}
+          onChange={handleChange}
+        />
+      ) : (
+        <textarea
+          className={`${style.valueInput} ${additionalClass}`}
+          value={value}
+          onChange={handleChange}
+        />
+      )}
       <span className={style.inputError}>
         {dirty ? (error ? error : '') : ' '}
       </span>
