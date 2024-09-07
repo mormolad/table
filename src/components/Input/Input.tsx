@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import style from './Input.module.scss';
-import { setProgress, setIsProgress } from '../../store/progressSlics';
+import { setIsProgress } from '../../store/progressSlics';
 interface ImportProps {
   beginValue: string | number;
   DATA_REGEXP: RegExp;
@@ -18,104 +18,84 @@ export default function Import({
   textArea,
 }: ImportProps) {
   const dispatch = useDispatch();
-  const [value, setValue] = useState<string | number>(beginValue);
+  const [inputValue, setInputValue] = useState<string | number>(beginValue);
+  //const [value, setValue] = useState<string | number>(beginValue);
   const [dirty, setDirty] = useState<boolean>(false);
   const [error, setError] = useState<string>('Поле не может быть пустым');
-  const [secondsRemaining, setSecondsRemaining] = useState<number>(10);
-
+  const [isValid, setIsValid] = useState(true); // состояние валидности
   const [initialValue, setInitialValue] = useState<string | number>(beginValue); // Сохраняем начальное значение
-  const timerRef = useRef<NodeJS.Timeout | null>(null); // Для отслеживания таймера
-  const progressRef = useRef<NodeJS.Timeout | null>(null); // Для отслеживания интервала прогресса
+  function useDebouncedValue(
+    value: string | number,
+    delay: number,
+    isValid: boolean
+  ) {
+    const [debouncedValue, setDebouncedValue] = useState(value);
+
+    useEffect(() => {
+      const timer = setTimeout(() => {
+        setDebouncedValue(value);
+      }, delay);
+      if (!isValid) {
+        clearTimeout(timer);
+        setDebouncedValue('');
+      }
+      return () => {
+        clearTimeout(timer);
+      };
+    }, [value, delay]);
+
+    return debouncedValue;
+  }
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const newValue = e.target.value;
-    clearProgressAndTimer();
-    dispatch(setIsProgress(false));
-    setValue(newValue);
-    setDirty(true);
-    // Проверка на ошибки
+    dispatch(setIsProgress(false)); //при изменении в поле ввода отключаем прогресс бар длдя проверки на валидность.
+    setInputValue(newValue);
+    setDirty(true); // помечаем, что поле подвергалось исправлениям
+    //Проверка на ошибки
     if (!newValue) {
       setError('Поле пустое');
-      clearProgressAndTimer();
+      setIsValid(false);
     } else if (!DATA_REGEXP.test(newValue)) {
       setError('Невалидные данные');
-      clearProgressAndTimer();
+      setIsValid(false);
     } else {
       setError('');
       // Если данные изменены и они валидны, перезапускаем таймер
       if (newValue !== initialValue) {
-        resetTimer(e.target.value);
+        setIsValid(true); // валидно
       }
     }
   };
 
-  const resetTimer = (valueSend: string) => {
-    clearProgressAndTimer();
-    dispatch(setProgress(0));
-    setSecondsRemaining(10);
-    // Запуск нового таймера на 5 секунд
-    timerRef.current = setTimeout(() => {
-      // Запуск прогресса после 5 секунд бездействия
-      dispatch(setIsProgress(true));
-      startProgressCountdown(valueSend);
-    }, 5000);
-  };
+  const debouncedSearchTerm = useDebouncedValue(inputValue, 3000, isValid);
 
-  const clearProgressAndTimer = () => {
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-      timerRef.current = null;
-    }
-    if (progressRef.current) {
-      clearInterval(progressRef.current);
-      progressRef.current = null;
-    }
-    dispatch(setProgress(0));
-    setSecondsRemaining(10);
-  };
-
-  const startProgressCountdown = (valueSend: string) => {
-    dispatch(setProgress(0));
-    let loadСounter = 0;
-    progressRef.current = setInterval(() => {
-      setSecondsRemaining((prevSeconds) => {
-        if (prevSeconds <= 1) {
-          clearInterval(progressRef.current!);
-          progressRef.current = null;
-          console.log(`Данные отправлены. Id:${id}, значение: ${valueSend}`);
-          setInitialValue(valueSend);
-          dispatch(setIsProgress(false));
-          return 0;
-        }
-        return prevSeconds - 1;
-      });
-      loadСounter = loadСounter + 10;
-      dispatch(setProgress(loadСounter));
-    }, 1000); // Обновляем прогресс каждую секунду
-  };
-
-  useEffect(() => {}, []);
-
-  // Очищаем таймеры при размонтировании компонента
   useEffect(() => {
-    return () => {
-      clearProgressAndTimer();
-    };
-  }, []);
+    if (inputValue !== initialValue) {
+      // Проверка на валидность перед выполнением поиска
+      if (isValid && debouncedSearchTerm && debouncedSearchTerm !== '') {
+        console.log('Выполняем поиск по:', debouncedSearchTerm);
+        dispatch(setIsProgress(true));
+      }
+    }
+  }, [debouncedSearchTerm, isValid]);
+
+  
 
   return (
     <div className={style.containerInput}>
       {!textArea ? (
         <input
           className={`${style.valueInput} ${additionalClass}`}
-          value={value}
+          value={inputValue}
           onChange={handleChange}
         />
       ) : (
         <textarea
           className={`${style.valueInput} ${additionalClass}`}
-          value={value}
+          value={inputValue}
           onChange={handleChange}
         />
       )}
