@@ -1,25 +1,31 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 interface ProgressState {
-  isProgress: boolean; // булевая переменная для отслеживания прогресса
-  progress: number;
+  isProgress: boolean;
+  isSend: boolean;
+  dataSend: string;
 }
 
 const repositorySlice = createSlice({
   name: 'isProgressState',
   initialState: {
     isProgress: false, // переменная для отображения или скрытия компонента прогрессбар
-    progress: 0, // переменная показывающая шкалу прогресса
+    isSend: false, // переменная показывающая шкалу прогресса
+    dataSend: '', // данные для вывода в консоль
   } as ProgressState,
   reducers: {
     setIsProgress(state: ProgressState, action: { payload: boolean }) {
       state.isProgress = action.payload; // Обновляем значение переменной isProgress
     },
-    setProgress(state: ProgressState, action: { payload: number }) {
-      state.progress = action.payload; // Обновляем значение переменной progress
+    setIsSend(state: ProgressState, action: { payload: boolean }) {
+      state.isSend = action.payload; // Обновляем значение переменной progress
+    },
+    setDataSend(state: ProgressState, action: { payload: string }) {
+      state.dataSend = action.payload; // Обновляем значение переменной progress
     },
   },
 });
 
 export default repositorySlice.reducer;
-export const { setProgress, setIsProgress } = repositorySlice.actions;
+export const { setIsSend, setIsProgress, setDataSend } =
+  repositorySlice.actions;

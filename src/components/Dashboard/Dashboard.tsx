@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+
 import style from './Dashboard.module.scss';
 import Input from '../Input/Input';
 import {
@@ -12,20 +12,20 @@ import {
 } from '../../constants/regexp';
 
 export default function Dashboard() {
-  // данные приходящие с API
+  //к примеру данные приходящие с бэка
   const date = '30 января 2024';
-  const shift = 2;
+  const shift = '2';
   const master = 'Иванов И. И.';
   const rptkm = 'РПТКМ-120';
   const personnel = 'Персонал';
-  const people = 100500;
+  const people = '100500';
   const comment =
     'Комментарий в 3-5 строчек, который тоже можно редактировать.';
   const ktp = 'КТП 2000 321';
   const work = 'Работает';
-  const workingUnits = 24;
+  const workingUnits = '24';
   const spi = 'SPI 3432';
-  const percent = 98.3;
+  const percent = '98.3';
   const works = 'Функционирует, но не бьет';
 
   return (
