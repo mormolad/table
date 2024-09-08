@@ -68,14 +68,12 @@ export default function Input({
     dispatch(setIsProgress(false)); // Отключаем прогресс бар при изменении данных
     setInputValue(newValue); // Устанавливаем новое значение в состояние
     setDirty(true); // Помечаем, что поле подвергалось изменениям
-
-    // Проверка на ошибки
+    setIsValid(false); // изначально устанавливаем не валидное состояние и меняем его после проверким на валидность
+    // Проверка на вылиднось поля
     if (!newValue) {
       setError('Поле пустое');
-      setIsValid(false);
     } else if (!DATA_REGEXP.test(newValue)) {
       setError('Невалидные данные');
-      setIsValid(false);
     } else {
       setError('');
       if (newValue !== initialValue) {
@@ -93,10 +91,10 @@ export default function Input({
   useEffect(() => {
     if (inputValue !== initialValue) {
       if (isValid && debouncedSearchTerm && debouncedSearchTerm !== '') {
-        dispatch(setIsProgress(true)); // Устанавливаем прогресс, если данные валидны и изменены
+        dispatch(setIsProgress(true)); // запускаем прогресс бар, если данные валидны и изменены
       }
     }
-  }, [debouncedSearchTerm, isValid, inputValue, initialValue, dispatch]);
+  }, [debouncedSearchTerm]);
 
   useEffect(() => {
     if (isSend) {
