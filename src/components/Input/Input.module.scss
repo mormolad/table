@@ -1,0 +1,18 @@
+.containerInput {
+  display: flex;
+  flex-direction: column;
+  .valueInput {
+    margin: auto 0;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 28px;
+    border: none;
+    //background: #e3e3e3;
+  }
+
+  .inputError {
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 10px;
+  }
+}
